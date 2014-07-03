@@ -1,12 +1,15 @@
 {
   "name": "obender",
-  "version": "0.0.0",
-  "description": "Bending objects like there's no avatar",
+  "version": "0.0.1",
+  "description": "Bending objects at will",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository" : "http://github.com/mrkev/obender",
+  "repository" :
+  { "type" : "git"
+  , "url" : "http://github.com/mrkev/obender.git"
+  }
   "author": "mrkev",
   "license": "ISC"
 }
