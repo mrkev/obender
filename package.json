@@ -9,7 +9,7 @@
   "repository" :
   { "type" : "git"
   , "url" : "http://github.com/mrkev/obender.git"
-  }
+  },
   "author": "mrkev",
   "license": "ISC"
 }

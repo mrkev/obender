@@ -25,10 +25,10 @@ You've been there. You get some json from the server in eww state and you
 		'Queue Name'	: 'wsh1',						// <--- Umm spaces on names. that sux.
 		'Printer Name'	: 'WSH Browsing Library 1',		//  --- Means we can't do stuff like
 		'Printer Model'	: 'Xerox Phaser 4510DT',		//  --- object.printer_model. Should change it.
-		'Color'			: 'B/W'							// <--- This should be a boolean tho.
-		'DPI'			: '600'							// <--- Ugh... it's all strings isn't it?
-		'Duplex'		: 'Two-sided'					// <--- This could be a boolean too.
-		'¢/Pg'			: '9'							// <--- '¢/Pg'? Are u kidding me?
+		'Color'			: 'B/W',						// <--- This should be a boolean tho.
+		'DPI'			: '600',						// <--- Ugh... it's all strings isn't it?
+		'Duplex'		: 'Two-sided',					// <--- This could be a boolean too.
+		'¢/Pg'			 : '9'							// <--- '¢/Pg'? Are u kidding me?
 	}
 
 	// 
@@ -39,28 +39,28 @@ You've been there. You get some json from the server in eww state and you
 So you're all like 'ugh' and then you use obender.
 	
 	remap(
-		{'Queue Name'		: 'queue_name',
-		 'Printer Name'		: 'printer_name',
-		 'Printer Model'	: 'printer_model',
-		 'Color'			: {'color': function (value) { return value === 'Color'; } },
-		 'DPI'				: 'dpi',
-		 'Duplex'			: {'duplex' : function (value) { return value === "Two-sided"; } },
+		{'Queue Name'		:  'queue_name',
+		 'Printer Name'		:  'printer_name',
+		 'Printer Model'	:  'printer_model',
+		 'Color'			: {'color'			: function (value) { return value === 'Color'; } },
+		 'DPI'				:  'dpi',
+		 'Duplex'			: {'duplex' 		: function (value) { return value === "Two-sided"; } },
 		 '¢/Pg'			 : {'price_per_page' : function (value) { return parseFloat(value) / 100; } }
-		},
-		object);	 // Object is nice now wyayayya party.
+		}, object);	   
+
+		// Object will be nice now wyayayya party.
 
 And your object is nice. BAM.
 
 	console.dir(object);
 
 	// >> { queue_name: 'wsh1',
-	//      printer_name: 'WSH Browsing 
-	//      printer_model: 'Xerox Phaser
+	//      printer_name: 'WSH Browsing Library 1',
+	//      printer_model: 'Xerox Phaser 4510DT',
 	//      color: false,
 	//      dpi: '600',
 	//      duplex: true,
-	//      price_per_page: 0.09 } ]
+	//      price_per_page: 0.09 }
 
-So you're like 'yay!'.
 		
 .remap changes names and values. Feed it what the object should be called, or what it should look like and how to convert it.

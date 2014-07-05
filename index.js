@@ -20,3 +20,15 @@ module.exports.remap = function(map, obj) {
 		}
 	}
 };
+
+
+// module.exports.ob  = function (obj) {
+// 	function Obender (obj) {
+// 		return new Promise()
+// 	}
+// 
+// 
+// 
+// 
+// 	return new Obender(obj);
+// })
