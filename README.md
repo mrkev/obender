@@ -1,5 +1,5 @@
 
-Obender
+Obender [![Build Status](https://secure.travis-ci.org/mrkev/obender.png?branch=master)](https://travis-ci.org/mrkev/obender)
 ===============
 
 Obender is an object bender

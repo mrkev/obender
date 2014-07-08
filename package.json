@@ -1,6 +1,6 @@
 {
   "name": "obender",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Bending objects at will",
   "main": "index.js",
   "scripts": {
