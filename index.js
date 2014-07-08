@@ -60,7 +60,7 @@ module.exports.remap = function(map, obj) {
 			}
 
 			// Set the new value. try
-			if (_val !== undefined || _val !== null) obj[_okey] = _val;
+			if (_val !== undefined && _val !== null) obj[_okey] = _val;
 
 			// Remember how we will deal with the key outside these brackets?
 			// Well make sure that happens.
@@ -70,8 +70,8 @@ module.exports.remap = function(map, obj) {
 		// If we're mapping the key to a function, evaluate that function.
 		if (typeof _nkey === 'function') {
 			try { 
-				var n = _nkey(_okey).toString();
-				_nkey  = n; }
+				var _n = _nkey(_okey).toString();
+				_nkey  = _n; }
 
 			catch (e) { 
 				_nkey = _okey; }
@@ -86,7 +86,6 @@ module.exports.remap = function(map, obj) {
 		obj[_nkey] = obj[_okey];
 		delete obj[_okey];
 	}
-
 }; 
 
 

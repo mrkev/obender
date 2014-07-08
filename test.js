@@ -220,7 +220,7 @@ describe('Obender', function(){
 						 'Printer Model'	:  'printer_model',
 						 'Color'			: {'color'			: function (value) { return value === 'Color'; } },
 						 'DPI'				:  'dpi',
-						 'Duplex'			: {'duplex' 		: function () { var value = "error?"; } },
+						 'Duplex'			: {'duplex' 		: function () {} },
 						 '¢/Pg'			 	: {'price_per_page' : function (value) { throw new Error(); } }
 						}, object);	
 
