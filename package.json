@@ -1,6 +1,6 @@
 {
   "name": "obender",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Bending objects ob",
   "main": "index.js",
   "scripts": {
