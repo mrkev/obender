@@ -1,7 +1,12 @@
 /* global module */
 'use strict';
 
-// { '*'  : ['string', 'number', 'function', {'*' : ['function', 'number', 'string']}] }
+/**
+ * Obenders mighty remap function. Changes property
+ * names, and optionally values.
+ * @param  {object} map The mapping to use
+ * @param  {object} obj The object to apply the mapping to
+ */
 module.exports.remap = function(map, obj) {
 	if (obj === null || obj === undefined ||
 		map === null || map === undefined) { 
@@ -26,13 +31,6 @@ module.exports.remap = function(map, obj) {
 		// to use it.
 		if (typeof _nkey === 'object' && 
 			_nkey.constructor === Object) {	
-
-
-			//
-			// {'Color' : {'key' : 'color', 
-			// 			   'val' :'yo'}}
-			//
-			// 
 
 			var _key = _nkey.key;
 			var _val = _nkey.val;
@@ -88,47 +86,3 @@ module.exports.remap = function(map, obj) {
 	}
 }; 
 
-
-
-
-// TODO: [String:], [Number:], [Boolean:] objects?
-
-// if (typeof map[_okey] === 'string' ||
-// 	typeof map[_okey] === 'number') {
-// 		_nkey  = map[_okey];
-// 	obj[_nkey] = obj[_okey];
-// 	delete obj[_okey];
-// 	continue;
-// 	
-// } else 
-
-// function complies (map, obj) {
-// 	for (var _key in map) {
-// 		var exp = new RegExp(_key);
-// 	}
-// }
-
-
-//
-// {'one' : 'two'}
-// 
-// 
-// 
-// 
-// 
-
-
-// module.exports.ob  = function (obj) {
-// 	function Obender (obj) {
-// 		return new Promise()
-// 	}
-// 	
-//	Obender.prototype.remap = function(map) {
-//		// body...
-//	};
-// 
-// 
-// 
-// 
-// 	return new Obender(obj);
-// })
