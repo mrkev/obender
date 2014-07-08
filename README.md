@@ -22,13 +22,13 @@ You've been there. You get some json from the server in eww state and you
 	var remap  = require('obender').remap;
 	
 	var object = {			
-		'Queue Name'	: 'wsh1',						// <--- Umm spaces on names. that sux.
-		'Printer Name'	: 'WSH Browsing Library 1',		//  --- Means we can't do stuff like
-		'Printer Model'	: 'Xerox Phaser 4510DT',		//  --- object.printer_model. Should change it.
-		'Color'			: 'B/W',						// <--- This should be a boolean tho.
-		'DPI'			: '600',						// <--- Ugh... it's all strings isn't it?
-		'Duplex'		: 'Two-sided',					// <--- This could be a boolean too.
-		'¢/Pg'			 : '9'							// <--- '¢/Pg'? Are u kidding me?
+		'Queue Name'	: 'wsh1',					// < Umm spaces on names sux
+		'Printer Name'	: 'WSH Browsing Library 1',	//   cuz we can't be like
+		'Printer Model'	: 'Xerox Phaser 4510DT',	//   object.printer_model /:
+		'Color'			: 'B/W',					// < Should be a boolean tho
+		'DPI'			: '600',					// < Ugh... strings smh
+		'Duplex'		: 'Two-sided',				// < Could be a boolean too.
+		'¢/Pg'			 : '9'					 	 // < '¢/Pg'? ru kidding me?
 	}
 
 	// 
@@ -39,13 +39,16 @@ You've been there. You get some json from the server in eww state and you
 So you're all like 'ugh' and then you use obender.
 	
 	remap(
-		{'Queue Name'		:  'queue_name',
-		 'Printer Name'		:  'printer_name',
-		 'Printer Model'	:  'printer_model',
-		 'Color'			: {'color'			: function (value) { return value === 'Color'; } },
-		 'DPI'				:  'dpi',
-		 'Duplex'			: {'duplex' 		: function (value) { return value === "Two-sided"; } },
-		 '¢/Pg'			 : {'price_per_page' : function (value) { return parseFloat(value) / 100; } }
+		{'Queue Name'	 :  'queue_name',
+		 'Printer Name'	 :  'printer_name',
+		 'Printer Model' :  'printer_model',
+		 'DPI'			 :  'dpi',
+		 'Color'		 : {'color'  : function (value) { 
+		 									return value === 'Color'; } },
+		 'Duplex'		 : {'duplex' : function (value) { 
+		 									return value === "Two-sided"; } },
+		 '¢/Pg'		  : {'price_per_page' : function (value) { 
+		 									return parseFloat(value) / 100; } }
 		}, object);	   
 
 		// Object will be nice now wyayayya party.

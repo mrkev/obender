@@ -6,12 +6,17 @@
   "scripts": {
     "test": "mocha"
   },
+
   "repository": {
     "type": "git",
     "url": "http://github.com/mrkev/obender.git"
   },
+  "bugs" : {
+    "url" : "https://github.com/mrkev/obender/issues"
+  },
+
   "author": "mrkev",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {},
   "devDependencies": {
     "mocha": "*",
