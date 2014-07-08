@@ -1,7 +1,7 @@
 {
   "name": "obender",
   "version": "0.1.0",
-  "description": "Bending objects at will",
+  "description": "Bending objects ob",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
@@ -12,7 +12,9 @@
   },
   "author": "mrkev",
   "license": "ISC",
-  "dependencies": {
-    "underscore": "^1.6.0"
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "*",
+    "chai" : "*"
   }
 }
