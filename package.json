@@ -6,10 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository" :
-  { "type" : "git"
-  , "url" : "http://github.com/mrkev/obender.git"
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/mrkev/obender.git"
   },
   "author": "mrkev",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "underscore": "^1.6.0"
+  }
 }
