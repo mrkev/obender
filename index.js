@@ -1,7 +1,6 @@
-/* global module, console */
+/* global module */
 'use strict';
 
-// var _ = require('underscore');
 // { '*'  : ['string', 'number', 'function', {'*' : ['function', 'number', 'string']}] }
 module.exports.remap = function(map, obj) {
 	if (obj === null || obj === undefined ||
@@ -61,7 +60,7 @@ module.exports.remap = function(map, obj) {
 			}
 
 			// Set the new value. try
-			if (_val != undefined || _val != null) obj[_okey] = _val;
+			if (_val !== undefined || _val !== null) obj[_okey] = _val;
 
 			// Remember how we will deal with the key outside these brackets?
 			// Well make sure that happens.
@@ -71,8 +70,8 @@ module.exports.remap = function(map, obj) {
 		// If we're mapping the key to a function, evaluate that function.
 		if (typeof _nkey === 'function') {
 			try { 
-				var _n = _nkey(_okey).toString();
-				_nkey  = _n; }
+				var n = _nkey(_okey).toString();
+				_nkey  = n; }
 
 			catch (e) { 
 				_nkey = _okey; }
