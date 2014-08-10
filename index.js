@@ -1,4 +1,4 @@
-/* global module */
+/* global module, console */
 'use strict';
 
 /**
@@ -97,7 +97,7 @@ module.exports.remap = function(map, obj) {
 
 module.exports.ob = (function (object) {
 
-																  /* Starters */
+																   /* Starter */
 
 	function Obender (obj) {
 		// if (!obj) throw ?
@@ -105,14 +105,6 @@ module.exports.ob = (function (object) {
 		this.matched = Object.keys(this.obj);
 	}
 
-// 	Proposed.
-//	
-//	Obender.prototype.bend = function(obj) {
-//		this.obj = obj;
-//		this.matched = Object.keys(this.obj);
-//		return this;
-//	};
-//
 																  /* Matchers */
 
 	/**
@@ -130,7 +122,6 @@ module.exports.ob = (function (object) {
 
 		return this;
 	};
-
 
 	/**
 	 * Subsequent modifying functions will apply to all
@@ -182,7 +173,7 @@ module.exports.ob = (function (object) {
 		}
 
 		return this;
-	};
+	}; // Allow for array of strings?
 
 	/**
 	 * Subsequent modifying functions will apply to all
@@ -204,28 +195,29 @@ module.exports.ob = (function (object) {
 		return this.obj;
 	};
 
-	Obender.prototype.done = function() {
-		return this.obj;
-	};
+	/**
+	 * Syntatic sugar for object.
+	 */
+	Obender.prototype.done = Obender.prototype.object;
 
+
+	/**
+	 * Returns all keys matched by obender for the object.
+	 * @return {Array<String>} Keys matched by Obender.
+	 */
 	Obender.prototype.matchedKeys = function() {
 		return this.matched;
 	};
 
-	Obender.prototype.valuesForKeys = function(arr) {
-
-		var result = new Array(arr.length);
-		for (var n = 0; n < arr.length; n++) {
-			if (this.matched.find(arr[n] > -1)) result[n] = this.obj[arr[n]];
-		}
-
-		return result;
-	};
-
+	/**
+	 * Returns all keys of the object
+	 * @return {Array<String>} All of the object's keys.
+	 */
 	Obender.prototype.allKeys = function() {
 		return Object.keys(this.obj);
 	};
 
+	// allValues. matchedValues.
 
 																 /* Modifiers */
 
@@ -353,30 +345,8 @@ module.exports.ob = (function (object) {
 	 * @param  {String} key     Key of property to add
 	 * @param  {Object} options Options object for Object.defineProperty()
 	 */
-	Obender.prototype.defineProperty = function(key, options) {
+	Obender.prototype.property = function(key, options) {
 		Object.defineProperty(this.obj, key, options);
-
-		return this;
-	};
-
-	/**
-	 * Redefines all properties to modify (matched), using Object.defineProperty
-	 * with the given options. If value, getter or setter are given in options, 
-	 * the old value won't be used.
-	 * @param  {Object} options Options object for Object.defineProperty()
-	 */
-	Obender.prototype.configureProperties = function(options) {
-		for (var n = 0; n < this.matched.length; n++) {
-			var key = this.matched[n];
-			if (!options.value && 
-				!options.getter && 
-				!options.setter) options.value = this.obj[key];
-
-			delete this.obj[this.matched[n]];
-
-			Object.defineProperty(this.obj, key, options);
-
-		}
 
 		return this;
 	};
@@ -405,25 +375,67 @@ module.exports.ob = (function (object) {
 	// 
 	// 
 	
+	// 	Proposed.
+	//	
+	//	Obender.prototype.bend = function(obj) {
+	//		this.obj = obj;
+	//		this.matched = Object.keys(this.obj);
+	//		return this;
+	//	};
+	//
+	//
+	//
+	// Proposed:
+	//Obender.prototype.valuesForKeys = function(arr) {
+	//
+	//	var result = new Array(arr.length);
+	//	for (var n = 0; n < arr.length; n++) {
+	//		if (this.matched.find(arr[n] > -1)) result[n] = this.obj[arr[n]];
+	//	}
+	//
+	//	return result;
+	//};
+	/**
+	 * Proposed
+	 * Redefines all properties to modify (matched), using Object.defineProperty
+	 * with the given options. If value, getter or setter are given in options, 
+	 * the old value won't be used.
+	 * @param  {Object} options Options object for Object.defineProperty()
+	 */
+	//Obender.prototype.configureProperties = function(options) {
+	//	for (var n = 0; n < this.matched.length; n++) {
+	//		var key = this.matched[n];
+	//		if (!options.value && 
+	//			!options.getter && 
+	//			!options.setter) options.value = this.obj[key];
+	
+	//		delete this.obj[this.matched[n]];
+	
+	//		Object.defineProperty(this.obj, key, options);
+	
+	//	}
+	
+	//	return this;
+	//};
 
 	// function (prev, curr, i, arr) => return *next prev
-	Obender.prototype.reduce = function(func) {
-		// body...
-	};
+	//Obender.prototype.reduce = function(func) {
+	//	// body...
+	//};
+	//
+	//// function (curr) => return *replace curr
+	//Obender.prototype.map = function(func) {
+	//	// body...
+	//};
 
-	// function (curr) => return *replace curr
-	Obender.prototype.map = function(func) {
-		// body...
-	};
-
-	Obender.prototype.mapkeys = function(func) {
-		for (var k = 0; k < this.matched.length; k++) {
-			var newkey = func(this.matched[k]);
-			if (newkey === this.matched[k]) continue;
-			this.obj[newkey] = this.obj[this.matched[k]];
-			delete this.obj[this.matched[k]];
-		};
-	};
+	//Obender.prototype.mapkeys = function(func) {
+	//	for (var k = 0; k < this.matched.length; k++) {
+	//		var newkey = func(this.matched[k]);
+	//		if (newkey === this.matched[k]) continue;
+	//		this.obj[newkey] = this.obj[this.matched[k]];
+	//		delete this.obj[this.matched[k]];
+	//	}
+	//};
 
 	// Obender.prototype.freakout = function(first_argument) {
 	// 	// body...

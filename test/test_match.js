@@ -3,9 +3,11 @@ var expect = require('chai').expect;
 var chai   = require('chai');
 
 chai.should();
-// Add test on adding object to obender. Matches all.
-// Add integration tests. Matching applies modifiers only to matched objects.
 
+/**
+ * Matching tests for obender. Makes sure matching functions
+ * match what they should.
+ */
 describe('Obender matching', function(){
 
 	var _ob, original;
@@ -123,6 +125,9 @@ describe('Obender matching', function(){
 	}); // ✓
 
 	describe('#matchAll()', function() {
+		beforeEach(function () {
+			_ob.match(/aw/i);
+		});
 
 		it('matches all', function(){
 			var result = _ob.matchAll().matchedKeys();
