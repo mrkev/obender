@@ -6,20 +6,20 @@
   "scripts": {
     "test": "mocha"
   },
-
   "repository": {
     "type": "git",
     "url": "http://github.com/mrkev/obender.git"
   },
-  "bugs" : {
-    "url" : "https://github.com/mrkev/obender/issues"
+  "bugs": {
+    "url": "https://github.com/mrkev/obender/issues"
   },
-
   "author": "mrkev",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "normalize-for-search": "^1.1.0"
+  },
   "devDependencies": {
     "mocha": "*",
-    "chai" : "*"
+    "chai": "*"
   }
 }

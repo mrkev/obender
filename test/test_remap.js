@@ -6,18 +6,9 @@ chai.should();
 
 describe('Obender', function(){
 
-	it('can be loaded without blowing up', function () {
-		assert.doesNotThrow(function () {require('./index.js')});
-		expect(require('./index.js')).to.not.be.undefined;
-	});
-
-	it('responds to what we expect it to respond', function () {
-		expect(require('./index.js')).to.respondTo('remap');
-	});
-
 	var remap, object;
 	beforeEach(function(){
-		remap  = require('./index.js').remap;
+		remap  = require('../index.js').remap;
 		object = {          
 		    'Queue Name'    : 'wsh1',
 		    'Printer Name'  : 'WSH Browsing Library 1',
