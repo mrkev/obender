@@ -42,7 +42,7 @@ describe('Obender waking up', function(){
 
 		it('matches all keys when first created', function () {
 
-			var result = _ob(original).matchedKeys();
+			var result = _ob.matchedKeys();
 			var expected = ['awesome', 'awebo', 'AWkay', '12lolcatz', 
 							'leprechaun', 'edmonton-', '102'];
 
