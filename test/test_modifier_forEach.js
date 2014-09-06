@@ -1,6 +1,7 @@
 var assert = require('assert');
 var expect = require('chai').expect;
 var chai   = require('chai');
+var suite  = require('./util');
 
 chai.should();
 
@@ -17,7 +18,7 @@ describe('Obender\'s mighty doings!', function(){
 		    'object'        : {a : 'a', b : 'b'}
 		}
 
-		_ob = require('../index.js').ob(original);
+		_ob = require(suite.obpath)(original);
 
 	});
 
@@ -101,7 +102,6 @@ var compareObjects = function (o1, o2) {
 	var ks1 = Object.keys(o1);
 	var ks2 = Object.keys(o2);
 	if (ks1.length != ks2.length) return false;
-	console.log(ks1, ks2)
 
 	var result = true;
 	ks1.forEach(function (k1) {

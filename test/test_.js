@@ -1,8 +1,6 @@
 var assert = require('assert');
 var expect = require('chai').expect;
-
-var obpath = '../index.js';
-
+var suite  = require('./util');
 
 /**
  * Tests the waking up of obender, and the information
@@ -12,13 +10,12 @@ var obpath = '../index.js';
 describe('Obender waking up', function(){
 
 	it('can be loaded without blowing up', function () {
-		assert.doesNotThrow(function () {require(obpath)});
-		expect(require(obpath)).to.not.be.undefined;
+		assert.doesNotThrow(function () {require(suite.obpath)});
+		expect(require(suite.obpath)).to.not.be.undefined;
 	});
 
 	it('responds to what we expect it to respond', function () {
-		expect(require(obpath)).to.respondTo('remap');
-		expect(require(obpath)).to.respondTo('ob');
+		expect(typeof require(suite.obpath)).to.equal('function');
 	});
 
 	describe('#constructor', function () {
@@ -35,7 +32,7 @@ describe('Obender waking up', function(){
 			    '102'        	: {a : 'a', b : 'b'}
 			}
 
-			_ob = require('../index.js').ob(original);
+			_ob = require(suite.obpath)(original);
 
 		});
 

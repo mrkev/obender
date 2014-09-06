@@ -1,101 +1,7 @@
 /* global module, console */
 'use strict';
 
-/**
- * Obenders mighty remap function. Changes property
- * names, and optionally values.
- * @param  {object} map The mapping to use
- * @param  {object} obj The object to apply the mapping to
- */
-
-module.exports.remap = function(map, obj) {
-	if (obj === null || obj === undefined ||
-		map === null || map === undefined) { 
-		return; }
-
-
-	for (var _okey in map) {
-
-		// There's no such key to map. Move on.
-		if (!obj.hasOwnProperty(_okey)) continue;
-
-
-		var _nkey = map[_okey];
-
-		// Key is mapped to nothing. Move on. To map to 'null' and 'undefined'
-		// user should use literal strings.
-		if (_nkey === undefined ||
-			_nkey === null) continue;
-
-
-		// If we're mapping to a non-primitive encapsulating object, we'll try
-		// to use it.
-		if (typeof _nkey === 'object' && 
-			_nkey.constructor === Object) {	
-
-			var _key = _nkey.key;
-			var _val = _nkey.val;
-
-			// We'll do nothing with the key because that will be dealt with
-			// outside this 'if'. Lets check out the value though.
-			
-			// Hmm value isn't anything? Must be in the compact syntax then.
-			if (_val === undefined) {
-				_key = Object.keys(_nkey)[0];
-				_val = _nkey[_key];
-			}
-			
-
-			// If new value is a function, evaluate it.
-			if (typeof _val === 'function') {
-				var _oval = obj[_okey];
-
-				try { 
-					var _n = _val(_oval);
-					_val  = _n; }
-
-				catch (e) { 
-					_val = _oval; }
-			}
-
-			// Set the new value. try
-			if (_val !== undefined && _val !== null) obj[_okey] = _val;
-
-			// Remember how we will deal with the key outside these brackets?
-			// Well make sure that happens.
-			if (_key !== null || _key !== undefined) _nkey = _key;
-		}
-
-		// If we're mapping the key to a function, evaluate that function.
-		if (typeof _nkey === 'function') {
-			try { 
-				var _n = _nkey(_okey).toString();
-				_nkey  = _n; }
-
-			catch (e) { 
-				_nkey = _okey; }
-		}
-
-		// Don't override any pre-existing properties.
-		// No need to change if the new key is same as old.
-		if (obj.hasOwnProperty(_nkey) || 
-			_nkey === _okey) continue;
-
-		// Replace the old key with the new key.
-		obj[_nkey] = obj[_okey];
-		delete obj[_okey];
-	}
-}; 
-
-
-
-
-
-
-// { '*'  : ['string', 'number', 'function', {'*' : ['function', 'number', 'string']}] }
-
-
-module.exports.ob = (function (object) {
+module.exports = (function (object) {
 
 																   /* Starter */
 
@@ -329,17 +235,27 @@ module.exports.ob = (function (object) {
 	 */
 	Obender.prototype.forEach = function(func) {
 		for (var n = 0; n < this.matched.length; n++) {
-			var given = { 
-				key : this.matched[n], 
-				value : this.obj[this.matched[n]]
-			};
-			
-			func.call(this.obj, given);
+			var given = new Given(this.matched[n],  this.obj[this.matched[n]]);
 
-			// Check if property wasn't deleted.
-			if (given.key in this.obj) {
-				this.obj[given.key] = given.value;
+			func.call(given, given);
+
+			switch (given.flag) {
+				case 'delete'  : {
+					
+				} break;
+
+				case 'match'   : {
+
+				} break;
+
+				case 'unmatch' : {
+
+				} break;
+
+				default : {}
 			}
+
+			this.obj[given.key] = given.value;
 
 			if (this.matched[n] !== given.key) {
 				delete this.obj[this.matched[n]];
@@ -347,6 +263,28 @@ module.exports.ob = (function (object) {
 		}
 
 		return this;
+	};
+
+	function Given (key, value) {
+		this.key = key;
+		this.value = value;
+		this.flag = null;
+	};
+
+	Given.prototype.delete = function() {
+		this.flag = 'delete';
+	};
+
+	Given.prototype.save = function() {
+		if (this.flag === 'delete') this.flag = null;
+	};
+
+	Given.prototype.match = function() {
+		this.flag = 'match';
+	};
+
+	Given.prototype.unmatch = function() {
+		this.flag = 'unmatch'
 	};
 
 	/**
@@ -457,4 +395,3 @@ module.exports.ob = (function (object) {
 
 	return new Obender(object);
 });
-

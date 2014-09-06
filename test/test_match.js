@@ -1,6 +1,7 @@
 var assert = require('assert');
 var expect = require('chai').expect;
 var chai   = require('chai');
+var suite  = require('./util');
 
 chai.should();
 
@@ -22,7 +23,7 @@ describe('Obender matching', function(){
 		    '102'        	: {a : 'a', b : 'b'}
 		}
 
-		_ob = require('../index.js').ob(original);
+		_ob = require(suite.obpath)(original);
 
 	});
 

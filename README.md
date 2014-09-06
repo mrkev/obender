@@ -36,25 +36,33 @@ Behold the mighty obender.
 Obender's got a mighty remap function.
 
     obender(object)
-        .remap({'Queue Name'    :  'queue_name',
-            'Printer Name'  :  'printer_name',
-            'Printer Model' :  'printer_model',
-            'DPI'           :  'dpi'
+        .remap({'Queue Name' :  'queue_name',
+            'Printer Name'   :  'printer_name',
+            'Printer Model'  :  'printer_model',
+            'DPI'            :  'dpi'
         });
 
 
 It's mightier than you think.
 
     obender(object)
-        .remap({'Color'  : {'color'  : function (value) { 
+        .remap({'Color' : {'color'  : function (value) { 
                                    return value === 'Color'; } },
             
-            'Duplex' : {'duplex' : function (value) { 
+            'Duplex'    : {'duplex' : function (value) { 
                                    return value === "Two-sided"; } },
             
-            '¢/Pg'   : {'price'  : function (value) { 
+            '¢/Pg'      : {'price'  : function (value) { 
                                    return parseFloat(value) / 100; } }
         });
+
+    // >> { queue_name: 'wsh1',
+    //      printer_name: 'WSH Browsing Library 1',
+    //      printer_model: 'Xerox Phaser 4510DT',
+    //      color: false,
+    //      dpi: '600',
+    //      duplex: true,
+    //      price_per_page: 0.09 }
 
 
 It's also got a mighty forEach function.
@@ -67,6 +75,8 @@ It's also got a mighty forEach function.
                 delete this[property.key];
             }
         });
+
+    // 
 
 
 Obender likes escaping of objects. He did it before it was cool.
@@ -108,15 +118,4 @@ And chain methods, of course.
         });
 
         // Removes whitespace of all properties containing "Name"
-
-
-    
-
-    // >> { queue_name: 'wsh1',
-    //      printer_name: 'WSH Browsing Library 1',
-    //      printer_model: 'Xerox Phaser 4510DT',
-    //      color: false,
-    //      dpi: '600',
-    //      duplex: true,
-    //      price_per_page: 0.09 }
 
