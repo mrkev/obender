@@ -21,7 +21,7 @@ You've been there. You get some json from the server in eww state and you 'litte
         'Color'         : 'B/W',                    // < Should be a boolean tho
         'DPI'           : '600',                    // < Ugh... strings smh
         'Duplex'        : 'Two-sided',              // < Could be a boolean too.
-        '¢/Pg'           : '9'                       // < '¢/Pg'? ru kidding me?
+        '¢/Pg'          : '9'                       // < '¢/Pg'? ru kidding me?
     }
     
     // 
@@ -36,86 +36,143 @@ Behold the mighty obender.
 Obender's got a mighty remap function.
 
     obender(object)
-        .remap({'Queue Name' :  'queue_name',
+        .remap({
+            'Queue Name' :  'queue_name',
             'Printer Name'   :  'printer_name',
             'Printer Model'  :  'printer_model',
-            'DPI'            :  'dpi'
         });
 
+    // >> { queue_name: 'wsh1',
+    //      printer_name: 'WSH Browsing Library 1',
+    //      printer_model: 'Xerox Phaser 4510DT',
+    //      'Color': 'B/W',
+    //      'DPI': '600',
+    //      'Duplex': 'Two-sided',
+    //      '¢/Pg': '9'
+    // }
 
-It's mightier than you think.
+
+It's mightier still.
 
     obender(object)
-        .remap({'Color' : {'color'  : function (value) { 
-                                   return value === 'Color'; } },
+        .remap({
+
+            'dpi'    : {'dpi'    : parseInt },
+
+            'Color'  : {'color'  : function (value) { 
+                                return value === 'Color'; } },
             
-            'Duplex'    : {'duplex' : function (value) { 
-                                   return value === "Two-sided"; } },
+            'Duplex' : {'duplex' : function (value) { 
+                                return value === "Two-sided"; } },
             
-            '¢/Pg'      : {'price'  : function (value) { 
-                                   return parseFloat(value) / 100; } }
+            '¢/Pg'   : {'price'  : function (value) { 
+                                return parseFloat(value) / 100; } }
         });
 
     // >> { queue_name: 'wsh1',
     //      printer_name: 'WSH Browsing Library 1',
     //      printer_model: 'Xerox Phaser 4510DT',
     //      color: false,
-    //      dpi: '600',
+    //      dpi: 600,
     //      duplex: true,
-    //      price_per_page: 0.09 }
+    //      price_per_page: 0.09
+    // }
 
 
 It's also got a mighty forEach function.
 
+    var object = {
+        'First Name'  : 'Severus',
+        'Last Name'   : 'Potter',
+        'Wand'        : null
+    }
+    
     obender(object)
         .forEach(function(property) {
-            property.key.replace(/\w/, "_");
+            property.key = property.key.toLowerCase().replace(/\w/, "_");
 
-            if (typeof property.value === "function") {
-                delete this[property.key];
-            }
+            if (property.value === null) 
+                property.delete();
         });
 
-    // 
+    // >> { first_name: 'Severus',
+    //      last_name: 'Potter',
+    // }
 
-
-Obender likes escaping of objects. He did it before it was cool.
+Obender likes escaping objects. He did it before it was cool.
 
 
 ## Obender matches.
 
-    var obender  = require('obender');
+    var object = {
+        'Name'              : 'Functional Programming and Data Structures',
+        'Subject'           : 'CS',
+        'Catalog Number'    : '3110',
+        'Grading Basis'     : 'Student Opt.',
+        'Units'             : 4,
+        'Class Description' : ''
+    }
         
+    // Returns all the keys with whitespace.
     obender(object)
-        .match(/\w/g)
+        .match(/\w/)
         .keys();        
     
     
-    > ["Queue Name", "Printer Name", "Printer Model"] 
-    // Returns all the keys with whitespace.
+    // >> ["Catalog Number", "Grading Basis", "Class Description"] 
 
 
 You can also do stuff with those keys.
 
-    obender(object)
-        .match(\^((?!Name).)*$\)
-        .delete();
+    var object = {
+        'real_name' : 'Bruce',,
+        'real_last_name' : 'Wayne',
+        'super_name' : 'Batman',
+        'super_song' : 'Nananananananananananananananana! Batman!'
+    }
 
-    // Deletes all properties without 'Name' on their keys.
+    // Deletes all properties without 'super' on their keys.
+    obender(object)
+        .match(\^((?!super).)*$\)
+        .delete();
+    
+    // >> { 'super_name' : 'Batman',
+    //      'super_song' : 'Nananananananananananananananana! Batman!'
+    // } 
+
 
 And chain methods, of course.
 
+    var object = {          
+        'Queue Name'    : 'wsh1',
+        'Printer Name'  : 'WSH Browsing Library 1',
+        'Printer Model' : 'Xerox Phaser 4510DT',
+        'Color'         : 'B/W',
+        'DPI'           : '600',
+        'Duplex'        : 'Two-sided',
+        '¢/Pg'          : '9'
+    }
+    
     obender(object)
-        .unmatch(/\w/)
+
+        // Deletes all properties except those whith whitespace and "Color"
+        .match(/\w/)
         .unmatch(\Color\)
         .delete()
 
-        // Deletes all properties except those whith whitespace and "Color"
-
+        // Escapes the ones with 'Name'
         .match(\Name\)
         .forEach(function (property) {
-            property.key.replace(/\w/, "_");
+            property.key = property.key.toLowerCase().replace(/\w/, "_");
         });
+    
+        // >> { queue_name: 'wsh1',
+        //      printer_name: 'WSH Browsing Library 1',
+        //      'Color': 'B/W'
+        // }
 
-        // Removes whitespace of all properties containing "Name"
+
+
+
+
 
