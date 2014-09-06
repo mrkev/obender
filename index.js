@@ -210,6 +210,12 @@ module.exports.ob = (function (object) {
 	};
 
 	/**
+	 * Syntatic sugar for matchedKeys.
+	 */
+	Obender.prototype.keys = Obender.prototype.matchedKeys;
+
+
+	/**
 	 * Returns all keys of the object
 	 * @return {Array<String>} All of the object's keys.
 	 */
@@ -330,7 +336,10 @@ module.exports.ob = (function (object) {
 			
 			func.call(this.obj, given);
 
-			this.obj[given.key] = given.value;
+			// Check if property wasn't deleted.
+			if (given.key in this.obj) {
+				this.obj[given.key] = given.value;
+			}
 
 			if (this.matched[n] !== given.key) {
 				delete this.obj[this.matched[n]];

@@ -34,7 +34,28 @@ describe('Obender\'s mighty doings!', function(){
 
 		it('doesn\'t crash on non-returning function');
 
-		it('calls with the object as this (and can be modified)');
+		it('calls with the object as this (and can be modified)', function () {
+			var result = _ob.forEach(function (property) {
+				if (property.key === 'null') {
+					delete this[property.key];
+					delete this['object'];
+				}
+
+				if (typeof property.value === 'undefined') {
+					this.hello = 'world';
+				}
+			}).object();
+
+			var expected = {
+				'String'    	: 'hello, world!',
+				'function'  	: function () { console.log('hello, world!'); },
+				'undefined'     : undefined,
+				'number'        : 317,
+				'hello'			: 'world'
+			}
+
+			expect(compareObjects(result, expected)).to.equal(true);
+		});
 
 		it('is applied only to matched properties');
 
@@ -75,3 +96,17 @@ describe('Obender\'s mighty doings!', function(){
 
 	});
 });
+
+var compareObjects = function (o1, o2) {
+	var ks1 = Object.keys(o1);
+	var ks2 = Object.keys(o2);
+	if (ks1.length != ks2.length) return false;
+	console.log(ks1, ks2)
+
+	var result = true;
+	ks1.forEach(function (k1) {
+		result = result && ks2.indexOf(k1) > -1;
+	});
+
+	return result;
+}
